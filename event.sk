@@ -1,0 +1,436 @@
+# Szia! 
+# A skript a konfigurákás után használatra kész, de 
+# egy függősége van, ez a "Skellet" addon.
+
+# ---------- Eventek v1.1 ----------- #
+# Írta: Szabolcs2008
+# License: GNU General Public License v3.0
+
+
+# ------------------------------ CONFIG ------------------------------ #
+options:
+  # szerintem ez a kettő egyértelmű
+  prefix: formatted "<##fb0000>&lK<##fb0505>&li<##fc0a0a>&lt<##fc0e0e>&lP<##fd1313>&lv<##fd1818>&lP &8» "
+  spawn: location 0, 75, 0 in world "world"
+  # Sumo event spawnok:
+  spawn_p1_sumo: location 0, 75, 0 in world "world"
+  spawn_p2_sumo: location 0, 75, 0 in world "world"
+
+  # ComboFly event spawnok:
+  spawn_p1_combo: location 0, 75, 0 in world "world"
+  spawn_p2_combo: location 0, 75, 0 in world "world"
+
+  # Nodebuff event spawnok:
+  spawn_p1_nodebuff: location 0, 75, 0 in world "world"
+  spawn_p2_nodebuff: location 0, 75, 0 in world "world"
+  
+  # Ide kerül aki belép az eventbe, vagy beírja /event spectate
+  spec_sumo: location 0, 75, 0 in world "world"
+  spec_combo: location 0, 75, 0 in world "world"
+  spec_nodebuff: location 0, 75, 0 in world "world"
+  # Az engedélyezett parancsok listája a parancsokat "|" jellel válaszd el 
+  enabled_commands: "event|msg|m|r"
+
+  # Kit típusa:
+  #  ESSENTIALS: essentialsx kit rendszer
+  #  PLAYERKITS: PlayerKits kit rendszer
+  kit_type: "ESSENTIALS"
+
+  # a duelek kezdetekor adott kit neve:
+  # Ha nincs kit akkor "none" 
+  
+  sumo_kit: "none"
+  combo_kit: "event_combo"
+  nodebuff_kit: "event_nodebuff"
+# -------------------------------------------------------------------- #
+
+
+
+
+
+# Nyeremény kódrésze: 165. sor
+
+# function startevent: 50. sor
+# előre beállított változók (ne nyúlj hozzá): 204.sor
+# debug cuccok (nem lényeges, de hasznos lehet): 208-301.sor
+# event parancs: 307. sor
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# ↓ ---------------↓↓↓--------------- A PROGRAM ---------------↓↓↓--------------- ↓ # 
+function startevent(e: player, spawn1: location, spawn2: location, type: text):
+  clear {joined::*}
+  clear {alreadyjoined::*}
+  if {running} is true:
+    send "&cMár elindult egy event!" to {_e}
+    stop
+  set {running} to true
+  set {enabled} to true
+  if {_type} is "sumo":
+    set {_type} to "Sumo"
+  if {_type} is "combo":
+    set {_type} to "ComboFly"
+  if {_type} is "nodebuff":
+    set {_type} to "Nodebuff"
+  loop all players:
+    send "&e%{_type}% event &fkezdődik &e60 másodperc &fmúlva &a(/event join a csatlakozáshoz)" to loop-player
+  wait 10 seconds
+  if {running} is true:
+    loop all players:
+      send "&e%{_type}% event &fkezdődik &e50 másodperc &fmúlva &a(/event join a csatlakozáshoz)" to loop-player
+  else:
+    stop
+  wait 10 seconds
+  if {running} is true:
+    loop all players:
+      send "&e%{_type}% event &fkezdődik &e40 másodperc &fmúlva &a(/event join a csatlakozáshoz)" to loop-player
+  else:
+    stop  
+  wait 10 seconds
+  if {running} is true:
+    loop all players:
+      send "&e%{_type}% event &fkezdődik &e30 másodperc &fmúlva &a(/event join a csatlakozáshoz)" to loop-player
+  else:
+    stop  
+  wait 10 seconds
+  if {running} is true:
+    loop all players:
+      send "&e%{_type}% event &fkezdődik &e20 másodperc &fmúlva &a(/event join a csatlakozáshoz)" to loop-player
+  else:
+    stop  
+  wait 10 seconds
+  if {running} is true:
+    loop all players:
+      send "&e%{_type}% event &fkezdődik &e10 másodperc &fmúlva &a(/event join a csatlakozáshoz)" to loop-player
+  else:
+    stop  
+  wait 5 seconds
+  if {running} is true:
+    loop all players:
+      send "&e%{_type}% event &fkezdődik &e5 másodperc &fmúlva &a(/event join a csatlakozáshoz)" to loop-player
+  else:
+    stop  
+  wait 1 second
+  if {running} is true:
+    loop all players:
+      send "&e%{_type}% event &fkezdődik &e4 másodperc &fmúlva &a(/event join a csatlakozáshoz)" to loop-player
+  else:
+    stop  
+  wait 1 second
+  if {running} is true:
+    loop all players:
+      send "&e%{_type}% event &fkezdődik &e3 másodperc &fmúlva &a(/event join a csatlakozáshoz)" to loop-player
+  else:
+    stop  
+  wait 1 second
+  if {running} is true:
+    loop all players:
+      send "&e%{_type}% event &fkezdődik &e2 másodperc &fmúlva &a(/event join a csatlakozáshoz)" to loop-player
+  else:
+    stop  
+  wait 1 second
+  if {running} is true:
+    loop all players:
+      send "&e%{_type}% event &fkezdődik &e1 másodperc &fmúlva &a(/event join a csatlakozáshoz)" to loop-player
+  else:
+    stop
+  wait 1 seconds
+
+
+  if size of {joined::*} < 2:
+    loop all players:
+      send "&fTúl kevés játékos! Az event indítása &esikertelen" to {_e}
+    set {running} to false
+    set {enabled} to false
+    clear {joined::*}
+    clear {alreadyjoined::*}
+    stop
+  if {running} is true:
+    loop all players:
+      send "&fAz &eevent &felkezdődött, &emár nem lehet csatlakozni." to loop-player
+  set {enabled} to false
+  wait 1 second
+  while 1 is 1:
+    if {running} is false:
+      clear {joined::*}
+      clear {alreadyjoined::*}
+      exit loop
+    set {_size} to size of {joined::*}
+    if {_size} is 1:
+      set {_winner} to the first element of {joined::*}
+      loop all players:
+        send "Az event nyertese: %the first element of {joined::*}%" to loop-player
+        send "&7A nyereménye: &8" to loop-player
+# -------------------- NYEREMÉNY -------------------- # 
+#Nyertes parancs(ok)
+# ez fut le azután, amikor valaki megnyeri az eventet
+# {_winner} a nyertes játékos
+
+      execute console command "" 
+
+# --------------------------------------------------- #
+
+      set {running} to false
+      set {enabled} to false
+      teleport first element of {joined::*} to {@spawn}
+      wait 10 ticks
+      clear {joined::*}
+      clear {alreadyjoined::*}
+      set {event_type} to "notRunning"
+      exit loop
+    else:
+      if {_size} > 1:
+        if {infight} is false:
+          set {_p1} to random element of {joined::*}
+          set {_p2} to random element of {joined::*}
+          while {_p2} is {_p1}:
+            set {_p2} to random element of {joined::*}
+          loop all players:
+            send "&fJelenleg harcol: " to loop-player
+            send " &e%{_p1}%" to loop-player
+            send " &fvs" to loop-player
+            send " &e%{_p2}%" to loop-player
+          teleport {_p1} to {_spawn1}
+          clear the inventory of {_p1}
+          clear the inventory of {_p2}
+          teleport {_p2} to {_spawn2}
+          if {kit_type} is "ESSENTIALS":
+            if {_type} is "Sumo":
+              if {@sumo_kit} is not "none":
+                execute console command "ekit %{@sumo_kit}% %{_p1}%"
+                execute console command "ekit %{@sumo_kit}% %{_p2}%"
+            if {_type} is "ComboFly":
+              if {@combo_kit} is not "none":
+                execute console command "ekit %{@combo_kit}% %{_p1}%"
+                execute console command "ekit %{@combo_kit}% %{_p2}%"
+            if {_type} is "Nodebuff":
+              if {@nodebuff_kit} is not "none":
+                execute console command "ekit %{@nodebuff_kit}% %{_p1}%"
+                execute console command "ekit %{@nodebuff_kit}% %{_p2}%"
+            set {infight} to true
+          if {kit_type} is "PLAYERKITS":
+            if {_type} is "Sumo":
+              if {@sumo_kit} is not "none":
+                execute console command "kit give %{@sumo_kit}% %{_p1}%"
+                execute console command "kit give %{@sumo_kit}% %{_p2}%"
+            if {_type} is "ComboFly":
+              if {@combo_kit} is not "none":
+                execute console command "kit give %{@combo_kit}% %{_p1}%"
+                execute console command "kit give %{@combo_kit}% %{_p2}%"
+            if {_type} is "Nodebuff":
+              if {@nodebuff_kit} is not "none":
+                execute console command "kit give %{@nodebuff_kit}% %{_p1}%"
+                execute console command "kit give %{@nodebuff_kit}% %{_p2}%"
+            set {infight} to true
+          
+      else:
+        wait 1 tick
+    wait 1 second
+
+variables:
+  {running} = false
+  {enabled} = false
+  {infight} = false
+  {event_type} = "notRunning"
+
+
+# kész
+on death:
+  if attacker is a player:
+    if victim is a player:
+      if {alreadyjoined::%attacker%} is true:
+        if {alreadyjoined::%victim%} is true:
+          broadcast "§bNyertes: §3%attacker%"
+          broadcast "§bVesztes: §3%victim%"
+          send "&eTovább &fjutottál!" to attacker
+          send "&cMeghaltál, &fezért kiestél!" to victim
+          remove victim from {joined::*}
+          set {alreadyjoined::%victim%} to false
+          if {event_type} is "sumo":
+            teleport {attacker} to {@spec_sumo}
+          if {event_type} is "combo":
+            teleport {attacker} to {@spec_combo}
+          if {event_type} is "nodebuff":
+            teleport {attacker} to {@spec_nodebuff}
+      set {infight} to false
+
+
+# kész
+on quit:
+  set {combatlogger} to player
+  if {alreadyjoined::%player%} is true:
+    set {alreadyjoined::%player%} to false
+    loop all players:
+      send "&e%player% &fkilépett és kiesett az eventből" to loop-player
+    if {infight} is true:
+      if {combatlogger} is {p1}:
+        loop all players:
+          broadcast "&eNyertes: &f%{p2}%"
+          broadcast "&eVesztes: &f%{combatlogger}%"
+        remove {p1} from {joined::*}
+        if {event_type} is "sumo":
+          teleport {p2} to {@spec_sumo}
+        if {event_type} is "combo":
+          teleport {p2} to {@spec_combo}
+        if {event_type} is "nodebuff":
+          teleport {p2} to {@spec_nodebuff}
+      if {combatlogger} is {p2}:
+        loop all players:
+          broadcast "&eNyertes: &f%{p1}%"
+          broadcast "&eVesztes: &f%{combatlogger}%"
+        remove {p2} from {joined::*}
+        if {event_type} is "sumo":
+          teleport {p1} to {@spec_sumo}
+        if {event_type} is "combo":
+          teleport {p1} to {@spec_combo}
+        if {event_type} is "nodebuff":
+          teleport {p1} to {@spec_nodebuff}
+    else:
+      remove player from {joined::*}
+
+
+# kész
+on command:
+  if {alreadyjoined::%player%} is true:
+    set {_command} to command
+    set {enabledcommands::*} to {@enabled_commands} split at "|"
+    loop {enabledcommands::*}:
+      if {_command} starts with loop-value:
+        stop
+    send "%{@prefix}%&7Nem használhatsz parancsokat event közben!" to player
+    cancel event
+
+
+# ez csak debug 
+# kész
+command /reseteventvariables:
+  permission: event.reset
+  aliases: rev
+  trigger:
+    message "&aAz event változók visszaállítva!"
+    clear {joined::*}
+    clear {alreadyjoined::*}
+    set {enabled} to false
+    set {running} to false
+    set {infight} to false
+    
+
+command /listevent:
+  permission: event.listplayers
+  trigger:
+    message "&eAz eventre csatlakozott játékosok száma: &7%size of {joined::*}%"
+    if size of {joined::*} is 0:
+      message "&fA lista üres"
+    loop {joined::*}:
+      message "&f%loop-value%"
+
+
+# teszt szükséges (kész?)
+command /event <text> [<text>]:
+  usage: <##fb0000>&lK<##fb0505>&li<##fc0a0a>&lt<##fc0e0e>&lP<##fd1313>&lv<##fd1818>&lP &8» &7Használat: /event join
+  trigger:
+    if arg-1 is "join":
+      if {running} is true:
+        if {enabled} is true:
+          if {alreadyjoined::%player%} is true:
+            message "&cMár beléptél egy eventbe!"
+            stop
+          else:
+            set {_join} to player
+            add player to {joined::*}
+            if {event_type} is "sumo":
+              teleport player to {@spec_sumo}
+            if {event_type} is "combo":
+              teleport player to {@spec_combo}
+            if {event_type} is "nodebuff":
+              teleport player to {@spec_nodebuff}
+                  
+            clear the inventory of player
+            set {alreadyjoined::%player%} to true
+            message "&aBeléptél az eventbe!"
+            loop all players:
+              send "&e%{_join}% &fbelépett az eventbe &7(%size of {joined::*}%)" to loop-player
+        else:
+          message "&fMár nem lehet csatlakozni az &eeventre!"
+      else:
+        message "&cJelenleg nem indul event"
+    
+    if arg-1 is "leave":
+      if {alreadyjoined::%player%} is true:
+        set {_leave} to player
+        message "&aKiléptél az eventből!"
+        remove player from {joined::*}
+        set {alreadyjoined::%player%} to false
+        loop all players:
+          send "&e%{_leave}% &fkilépett az eventből &7(%size of {joined::*}%)" to loop-player
+      else:
+        message "&cNem vagy belépve egy eventbe sem!"
+    
+    if arg-1 is "start":
+      if player has permission "event.start":
+        set {event_type} to arg-2
+        if arg-2 is not set:
+          message "%{@prefix}%&7Használat: /event start sumo/combo/nodebuff"
+        if arg-2 is "sumo":
+          startevent(player, {@spawn_p1_sumo}, {@spawn_p2_sumo}, arg-2)
+        if arg-2 is "combo":
+          startevent(player, {@spawn_p1_combo}, {@spawn_p2_combo}, arg-2)
+        if arg-2 is "nodebuff":
+          startevent(player, {@spawn_p1_nodebuff}, {@spawn_p2_nodebuff}, arg-2)
+          
+
+      else:
+        message "%{@prefix}%&7Ehhez nincs jogod!"      
+      
+    if arg-1 is "stop":
+      if player has permission "event.stop":
+        if {running} is true:
+          message "&cEvent leállítva"
+          loop all players:
+            if {joined::*} contains loop-player:
+              teleport loop-player to {@spawn}
+          set {running} to false
+          set {enabled} to false
+          set {infight} to false
+          clear {joined::*}
+          clear {alreadyjoined::*}
+          set {event_type} to "notRunning"
+        else:
+          message "%{@prefix}%&aNem megy event, amit le tudnál állítani!"
+      else:
+        message "%{@prefix}%&7Ehhez nincs jogod!"
+    
+    if arg-1 is "spectate":
+      if {event_type} is "sumo":
+        teleport player to {@spec_sumo}
+      if {event_type} is "combo":
+        teleport player to {@spec_combo}
+      if {event_type} is "nodebuff":
+        teleport player to {@spec_nodebuff}
+      if {event_type} is "notRunning":
+        message "%{@prefix}%&7Nem megy event amit nézhetnél!"
+    
+    if arg-1 is "spec":
+      if {event_type} is "sumo":
+        teleport player to {@spec_sumo}
+      if {event_type} is "combo":
+        teleport player to {@spec_combo}
+      if {event_type} is "nodebuff":
+        teleport player to {@spec_nodebuff}
+      if {event_type} is "notRunning":
+        message "%{@prefix}%&7Nem megy event amit nézhetnél!"
